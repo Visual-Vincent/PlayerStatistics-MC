@@ -12,3 +12,6 @@ For building:
 
 ## Prebuilt binaries
 Head over to [Releases](https://github.com/Visual-Vincent/PlayerStatistics-MC/releases).
+
+## Screenshots
+[![Tool and Crop statistics](/screenshots/example1.png)](/screenshots/example1.png)
