@@ -1,7 +1,7 @@
 # Player Statistics List
 A Minecraft Forge mod showing relevant statistics about the player and the world around them.
 
-This mod is client-side only. Works on any server.
+This mod is client-side only, meaning the server(s) you are joining don't need to be modded in order for this mod to work for you.
 
 ## Requirements
 For running:
