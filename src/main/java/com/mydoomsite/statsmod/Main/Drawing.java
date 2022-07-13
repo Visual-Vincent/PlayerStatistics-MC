@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mydoomsite.statsmod.lib.TextMetrics;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 
 public class Drawing
 {
@@ -97,6 +97,6 @@ public class Drawing
 	
 	public static void sendChatMessageToClient(String message)
 	{
-		minecraft.player.sendMessage(new TextComponent("\u00A7l\u00A7e[Statistics List]\u00A7r " + message), null);
+		minecraft.player.displayClientMessage(Component.literal("\u00A7l\u00A7e[Statistics List]\u00A7r " + message), false); // false = Display in chat, true = Display above status bar
 	}
 }

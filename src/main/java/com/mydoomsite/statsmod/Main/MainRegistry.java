@@ -1,6 +1,7 @@
 package com.mydoomsite.statsmod.Main;
 
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.IExtensionPoint;
@@ -29,6 +30,7 @@ public class MainRegistry
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(this::Setup);
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(this::ClientSetup);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(this::RegisterKeyBindings);
 		});
 	}
 	
@@ -41,7 +43,12 @@ public class MainRegistry
 	{
 		StringHelper.Initialize();
 		MinecraftForge.EVENT_BUS.register(RenderHandler.Instance);
-		MinecraftForge.EVENT_BUS.register(new KeyBindings());
+		MinecraftForge.EVENT_BUS.register(KeyBindings.Instance);
 		MinecraftForge.EVENT_BUS.register(new TickHandlers());
+	}
+	
+	private void RegisterKeyBindings(RegisterKeyMappingsEvent event)
+	{
+		KeyBindings.RegisterKeyBindings(event);
 	}
 }

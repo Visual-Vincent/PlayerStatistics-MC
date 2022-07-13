@@ -8,12 +8,14 @@ import com.mydoomsite.statsmod.lib.GlobalProperties;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.client.event.InputEvent.Key;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class KeyBindings
+public final class KeyBindings
 {
+	public static KeyBindings Instance = new KeyBindings();
+	
 	public static final int ShowHideList = 0;
 	public static final int ShowHideCoords = 1;
 	public static final int ResetDistances = 2;
@@ -48,23 +50,29 @@ public class KeyBindings
 		GLFW.GLFW_KEY_KP_7
 	};
 	
-	private final KeyMapping[] keys;
+	private static KeyMapping[] keys;
 	
 	private static Minecraft minecraft = Minecraft.getInstance();
 	
-	public KeyBindings()
+	private KeyBindings() {}
+	
+	@SubscribeEvent
+	public static void RegisterKeyBindings(RegisterKeyMappingsEvent event)
 	{
+		if(keys != null)
+			return;
+		
 		keys = new KeyMapping[desc.length];
 		
 		for (int i = 0; i < desc.length; ++i)
 		{
 			keys[i] = new KeyMapping(desc[i], keyValues[i], "Player Statistics List");
-			ClientRegistry.registerKeyBinding(keys[i]);
+			event.register(keys[i]);
 		}
 	}
 	
 	@SubscribeEvent
-	public void onKeyInput(KeyInputEvent event)
+	public void onKeyInput(Key event)
 	{
 		if ((minecraft.isWindowActive() || (minecraft.screen != null && (minecraft.screen instanceof ChatScreen))) && !minecraft.options.renderDebug)
 		{
@@ -124,5 +132,4 @@ public class KeyBindings
 			}
 		}
 	}
-
 }
